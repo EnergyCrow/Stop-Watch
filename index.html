@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+    
+    
+    <section class="dashboard">
+      <div class="mainContainer">
+        <header class="headerSection">
+          <div class="rowBox a">
+            <h3>Stop Watch</h3>
+          </div>
+          <div class="rowBox b">
+            <h1 class="timer">00:00:00:00</h1>
+          </div>
+        </header>
+        <section class="bodySection">
+          <div class="bodyContent">
+            <button class="pauseBtn">Stop</button>
+            <button class="startBtn">Start</button>
+            <button class="resetBtn" onclick="resetTimer()">Reset</button>
+            <button class="lapBtn" onclick="lapTimer()">Lap</button>
+          </div>
+        </section>
+        <footer class="footerSection">
+          
+        </footer>
+      </div>
+      <div class="lapList">
+        <div class="overflowDiv">
+          <div class="scrollDiv">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <script src="index.js"></script>
+  </body>
+</html>
