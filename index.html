@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href=".css" type="text/css">
+    <style>
+      
+      :root {
+        
+        --bgColor: hsl(220.9,32.9%,42.7%);
+        --primaryColor1: hsl(186.6,25.9%,9%);
+        
+      }
+      
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        -outline: 1px dashed white;
+        color: white;
+      }
+      
+      body {
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--bgColor);
+        
+      }
+      
+      .dashboard {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      
+      .mainContainer {
+        width: 330px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        
+      }
+
+      
+      .headerSection {
+        width: 100%;
+        height: auto;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      
+      .bodySection {
+        width: 100%;
+        height: auto;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        
+      }
+      
+      .footerSection {
+        width: 100%;
+        height: auto;
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+        
+      }
+      
+      .rowBox {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .headerSection .rowBox.a {
+        height: 34px;
+        justify-content: flex-start;
+        font-size: 0.9rem;
+      }
+      .headerSection .rowBox.b {
+        height: 90px;
+        font-size: 30px;
+      }
+      
+      button {
+        background: hsla(273.4,39.4%,100%,0.103);
+        border: 0;
+        padding: 10px;
+        width: 68px;
+        font-size: 14px;
+        font-weight: bolder;
+        border-radius: 0.5rem;
+        border: 0.13rem solid white;
+      }
+      
+      .lapList {
+        width: 300px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+      }
+      
+      .overflowDiv {
+        width: 90%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+      }
+      
+      .scrollDiv {
+        width: 100%;
+        height: auto;
+        padding: 20px 0;
+        
+        display: flex;
+        justify-content: flex-start;
+        align-items: center; 
+        flex-direction: column;
+      }
+      
+      .lapItem {
+        width: 100%;
+        height: 48px;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+      }
+      
+      
+      
+      
+      @keyframes bgShift {
+        0% {
+          background: var(--bgColor);
+        }
+        
+        40% {
+          background: hsl(360, 50%, 50%);
+        }
+        
+        80% {
+          background: hsl(150, 50%, 50%);
+        }
+        
+        100% {
+          background: var(--bgColor);
+        }
+      }
+      
+      
+      
+    </style>
+  </head>
+  <body>
+    
+    
+    <section class="dashboard">
+      <div class="mainContainer">
+        <header class="headerSection">
+          <div class="rowBox a">
+            <h3>Stop Watch</h3>
+          </div>
+          <div class="rowBox b">
+            <h1 class="timer">00:00:00:00</h1>
+          </div>
+        </header>
+        <section class="bodySection">
+          <div class="bodyContent">
+            <button class="pauseBtn">Stop</button>
+            <button class="startBtn">Start</button>
+            <button class="resetBtn" onclick="resetTimer()">Reset</button>
+            <button class="lapBtn" onclick="lapTimer()">Lap</button>
+          </div>
+        </section>
+        <footer class="footerSection">
+          
+        </footer>
+      </div>
+      <div class="lapList">
+        <div class="overflowDiv">
+          <div class="scrollDiv">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <script src=""></script>
+    <script>
+      
+      const body = document.querySelector('body');
+      const timer = document.querySelector('.timer');
+      const pauseBtn = document.querySelector('.pauseBtn');
+      const startBtn = document.querySelector('.startBtn');
+      const resetBtn = document.querySelector('.resetBtn');
+      const lapBtn = document.querySelector('.lapBtn');
+      const scrollDiv = document.querySelector('.scrollDiv');
+      const overflowDiv = document.querySelector('.overflowDiv');
+      
+      
+      let milsec = 0;
+      let sec = 0;
+      let min = 0;
+      let hr = 0;
+      let zeroMilsec = "0"
+      let zeroSec = "0"
+      let zeroMin = "0"
+      let zeroHr = "0"
+      
+      let interval;
+      
+      startBtn.onclick = () => {
+        milsec ++;
+        clearInterval(interval);
+        interval = setInterval(startTimer, 10);
+        body.style.animation = "bgShift 30s linear infinite";
+        
+        pauseBtn.onclick = () => {
+          clearInterval(interval);
+          body.style.animationPlayState = "paused";
+        }
+      }
+      
+      function startTimer() {
+        if(milsec >= 9) {
+            zeroMilsec = "";
+          }
+        if(milsec >= 99) {
+          sec ++;
+          milsec = 0;
+          zeroMilsec = "0";
+        }
+        
+        if(sec > 9) {
+          zeroSec = "";
+        }
+        if(sec > 59) {
+          min ++;
+          zeroSec = "0";
+          sec = 0
+        }
+        
+        if(min > 9) {
+          zeroMin = "";
+        }
+        if(min > 59) {
+          hr ++;
+          zeroMin = "0";
+          min = 0
+        }
+        
+        if(hr > 9) {
+          zeroHr = "";
+        }
+        
+        
+        milsec += 1;
+        timer.innerHTML = `${zeroHr}${hr}:${zeroMin}${min}:${zeroSec}${sec}:${zeroMilsec}${milsec}`;
+      
+      }
+      
+      function resetTimer() {
+        //Remove all lap items
+        const lapItems = Array.from(document.querySelectorAll('.lapItem'))
+        for(let item of lapItems) {
+          item.remove();
+        }
+        
+        body.style.animation = "none";
+        setTimeout(() => {
+          document.querySelector('.overflowDiv').appendChild(scrollDiv);
+        }, 200)
+        clearInterval(interval);
+        milsec = 0;
+        sec = 0;
+        min = 0;
+        hr = 0;
+        zeroMilsec = "0"
+        zeroSec = "0"
+        zeroMin = "0"
+        zeroHr = "0"
+        timer.innerHTML = `00:00:00:00`;
+      }
+      
+      function lapTimer() {
+        const newLapItem = document.createElement('div');
+        newLapItem.classList.add('lapItem');
+        newLapItem.innerHTML = `<p>${zeroHr}${hr}:${zeroMin}${min}:${zeroSec}${sec}:${zeroMilsec}${milsec}</p>`;
+        scrollDiv.appendChild(newLapItem);
+        overflowDiv.scrollTop = overflowDiv.scrollHeight;
+      }
+      
+      
+      
+      
+      
+      
+      
+    </script>
+  </body>
+</html>
